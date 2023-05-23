@@ -1,0 +1,63 @@
+#IMPORTANDO AS BIBLIOTECAS
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+# Carregar o arquivo XLSX
+dados = pd.read_excel('caminho/do/arquivo.xlsx')
+
+# Exibir as primeiras linhas do conjunto de dados
+dados.head()
+
+# Estatísticas descritivas
+descricao = dados.describe()
+media = dados.mean()
+moda = dados.mode()
+mediana = dados.median()
+desvio_padrao = dados.std()
+
+# Exibir as estatísticas descritivas
+print(descricao)
+print(media)
+print(moda)
+print(mediana)
+print(desvio_padrao)
+
+# Matriz de correlação
+correlacao = dados.corr()
+
+# Exibir a matriz de correlação
+print(correlacao)
+
+# Plotar um mapa de calor da matriz de correlação
+plt.figure(figsize=(10, 8))
+plt.imshow(correlacao, cmap='coolwarm', interpolation='nearest')
+plt.colorbar()
+plt.xticks(range(len(correlacao.columns)), correlacao.columns, rotation=90)
+plt.yticks(range(len(correlacao.columns)), correlacao.columns)
+plt.title('Mapa de Calor da Matriz de Correlação')
+plt.show()
+
+from sklearn.linear_model import LinearRegression
+
+# Separar as variáveis independentes e dependentes
+X = dados[['variavel1', 'variavel2']]  # Substitua pelas suas variáveis independentes
+y = dados['variavel_alvo']  # Substitua pela sua variável dependente
+
+# Criar o modelo de regressão linear
+modelo = LinearRegression()
+
+# Treinar o modelo
+modelo.fit(X, y)
+
+# Fazer previsões
+previsoes = modelo.predict(X)
+
+# Avaliar o modelo
+erro_quadratico_medio = np.mean((previsoes - y) ** 2)
+score_r2 = modelo.score(X, y)
+
+print("Erro Quadrático Médio:", erro_quadratico_medio)
+print("Score R²:", score_r2)
+
